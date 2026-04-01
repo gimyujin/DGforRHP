@@ -1,0 +1,39 @@
+seed: 42
+
+encoder_name: bert-base-uncased
+num_labels: 2
+
+text_col: text
+label_col: label
+domain_col: domain
+
+use_numeric: false
+num_cols: []
+
+max_length: 320
+batch_size: 32
+epochs: 2
+
+lr: 2.0e-5
+weight_decay: 0.01
+
+use_amp: true
+max_grad_norm: 1.0
+
+# DANN
+domain_loss_weight: 0.5
+max_grl_lambda: 1.0
+grl_gamma: 10.0
+
+# model head
+dropout: 0.1
+hidden_num: 128
+head_hidden: 256
+
+threshold: 0.5
+num_workers: 2
+
+paths:
+  train: data/train_samples.parquet
+  val: data/val_samples.parquet
+  test: data/test_samples.parquet

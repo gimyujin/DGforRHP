@@ -1,0 +1,44 @@
+seed: 42
+
+exp:
+  mode: text_num
+  algo: erm 
+  run_id: con3
+
+data:
+  data_dir: data
+  train_file: D:\amazon23_test\raw\selected_source_sets\train\dynamic_consistency_top3_train.parquet
+  val_file: D:\amazon23_test\raw\selected_source_sets\test\val\dynamic_consistency_top3_test_val.parquet
+  test_file: D:\amazon23_test\raw\selected_source_sets\test\test\dynamic_consistency_top3_test_test.parquet
+
+columns:
+  text: text
+  label: label
+  domain: domain
+  num:
+    - rating_number
+    - year
+    - month
+    - day
+
+model:
+  name: bert-base-uncased
+  max_length: 320
+  dropout: 0.1
+  num_hidden: 128
+
+train:
+  batch_size: 64
+  epochs: 10
+  lr: 2e-5
+  eps: 1e-8
+  weight_decay: 0.01
+  num_workers: 3
+  mixed_precision: true
+  max_grad_norm: 1.0
+
+validation:
+  metric: f1_macro
+
+output:
+  dir: datastrat/outputs/erm

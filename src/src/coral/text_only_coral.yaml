@@ -1,0 +1,43 @@
+seed: 42
+
+exp:
+  algo: coral
+  mode: text_only
+  run_id: v1
+
+output:
+  dir: outputs
+
+data:
+  data_dir: data
+  train_file: train_samples.parquet
+  val_file: val_samples.parquet
+  test_file: test_samples.parquet
+
+columns:
+  text: text
+  label: label
+  domain: domain
+
+model:
+  name: bert-base-uncased
+  max_length: 320
+  dropout: 0.1
+  num_hidden: 128
+
+coral:
+  lambda: 0.1
+  feature: hidden   # hidden 권장 (classifier 직전 feature)
+
+train:
+  batch_size: 32
+  epochs: 2
+  lr: 2e-5
+  eps: 1e-8
+  weight_decay: 0.01
+  num_workers: 3
+  mixed_precision: true
+  max_grad_norm: 1.0
+
+val:
+  metric: f1_macro

@@ -1,0 +1,47 @@
+# text_num_groupdro.yaml (baseline에서 최소 수정)
+seed: 42
+
+exp:
+  mode: text_num
+  algo: groupdro      # entrypoint 그대로 사용
+  run_id: v2
+
+output:
+  dir: outputs
+
+data:
+  data_dir: data
+  train_file: train_samples.parquet
+  val_file: val_samples.parquet
+  test_file: test_samples.parquet
+
+columns:
+  text: text
+  label: label
+  domain: domain
+  num:
+    - rating_number
+    - year
+    - month
+    - day
+
+model:
+  name: bert-base-uncased
+  max_length: 320
+  dropout: 0.1
+  num_hidden: 128
+
+train:
+  batch_size: 32
+  epochs: 2
+  lr: 2e-5
+  eps: 1e-8
+  weight_decay: 0.01
+  num_workers: 3
+  mixed_precision: true
+  max_grad_norm: 1.0
+  eta: 0.05     #v1 = 0.1     # ✅ GroupDRO q update step size
+
+val:
+  metric: f1_macro
+  best_model_key: domain_unweighted_mean

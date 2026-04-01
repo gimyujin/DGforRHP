@@ -1,0 +1,47 @@
+#text_only_mldg.yaml
+
+seed: 42
+
+exp:
+  mode: text_only
+  algo: mldg
+  run_id: v1
+
+output:
+  dir: outputs
+
+data:
+  data_dir: data
+  train_file: train_samples.parquet
+  val_file: val_samples.parquet
+  test_file: test_samples.parquet
+
+columns:
+  text: text
+  label: label
+  domain: domain
+  num: []   # text-only
+
+model:
+  name: bert-base-uncased
+  max_length: 320
+  dropout: 0.1
+
+train:
+  batch_size: 8
+  epochs: 2
+  lr: 2e-5
+  eps: 1e-8
+  weight_decay: 0.01
+  num_workers: 3
+  mixed_precision: true
+  max_grad_norm: 1.0
+
+mldg:
+  inner_lr: 1.0e-3
+  lam: 1.0
+  steps_per_epoch: null   # null이면 코드에서 min(len(loader_d))로 처리
+
+val:
+  metric: f1_macro
+  best_model_key: domain_unweighted_mean
